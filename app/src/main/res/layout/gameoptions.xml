@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backround_gamemodes"
+    android:layout_weight="100"
+    >
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/fipps_regular"
+        android:text="Gamemode"
+        android:textColor="@android:color/black"
+        android:textSize="35dp"
+
+        />
+
+    <ImageButton
+    android:id="@+id/colorHunt"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="200dp"
+    android:background="#00FFFFFF"
+    android:scaleX="0.8"
+    android:scaleY="0.8"
+    app:srcCompat="@drawable/color_hunt"
+
+    />
+
+</RelativeLayout>

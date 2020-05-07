@@ -1,0 +1,16 @@
+<resources>
+    
+    
+    <string name="app_name">My Application</string>
+    <string name="title_activity_connection">Connection</string>
+    <string-array name="difficultys">
+
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>p
+
+
+    </string-array>
+
+
+</resources>

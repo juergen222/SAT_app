@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/backround2"
+
+    android:orientation="vertical"
+    tools:context=".Connection">
+
+    <ImageButton
+        android:id="@+id/launchgame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        app:srcCompat="@drawable/launchbutton" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+
+        />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/spieloptionen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        app:srcCompat="@drawable/gameoptions" />
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
