@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,20 +20,27 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
     private static final String TAG = "fragment";
 
 
+    public gamemode_options1(){
+
+
+    }
+
     long time;
     int score;
     boolean colorChooseable;
-    String zeit;
-    String maxScore;
+    String zeit = "0";
+    String maxScore = "0";
     int x;
     int y;
+    static int z;
     int difficulty;
     private FragmentAListener listener;
     boolean configurated =false;
+    private ImageButton ok;
 
     public interface FragmentAListener{
 
-        void onInputASent(int inputt, int inputs);
+        void onInputASent(int inputt, int inputs, int z);
     }
 
 
@@ -41,19 +49,23 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.gamemode_options1, container, false);
-        ImageButton ok = null;
 
-        ok.findViewById(R.id.ok_button);
+
+        ok = view.findViewById(R.id.ok_button);
 
         //androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        EditText time = view.findViewById(R.id.time);
+        /*EditText time = view.findViewById(R.id.time);
         EditText maxscore = view.findViewById(R.id.maxScore);
         zeit = time.getText().toString();
         maxScore = maxscore.getText().toString();
+        if (zeit.length()== 0 || maxScore.length() == 0)
+
+
         x = Integer.parseInt(zeit);
-        y = Integer.parseInt(maxScore);
-        
+        y = Integer.parseInt(maxScore);*/
+        EditText time = view.findViewById(R.id.time);
+        EditText maxscore = view.findViewById(R.id.maxScore);
 
         ArrayAdapter<CharSequence> difficulties = ArrayAdapter.createFromResource(getActivity() , R.array.difficultys, android.R.layout.simple_spinner_item);
         //ArrayAdapter<String> difficulties = new ArrayAdapter<String>(gamemode_options1.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.difficultys));
@@ -62,14 +74,33 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
         difficulty.setAdapter(difficulties);
         difficulty.setOnItemSelectedListener(this);
 
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onInputASent(x, y);
 
 
-            }
-        });
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+
+                /*if (zeit.length()== 0 || maxScore.length() == 0)
+                    return;*/
+                    zeit = time.getText().toString();
+                    maxScore = maxscore.getText().toString();
+
+
+
+                    x = Integer.parseInt(zeit);
+                    y = Integer.parseInt(maxScore);
+                    listener.onInputASent(x, y, z);
+
+
+                    Intent intent = new Intent(getActivity(), Connection.class);
+                    startActivity(intent);
+
+
+                }
+            });
+
 
 
 
@@ -93,6 +124,8 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
         }
     }
 
+
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -105,19 +138,18 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
         switch (text)
         {
             case "Easy":
-                difficulty = 0;
+                z = 1;
                 return;
 
             case "Medium":
-                difficulty = 1;
+                z = 2;
                 return;
 
             case "Hard":
-                difficulty = 2;
+                z= 3;
                 return;
 
         }
-
 
     }
 
