@@ -1,19 +1,27 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 
-public class Connection extends AppCompatActivity {
+public class Connection extends AppCompatActivity implements gamemode_options1.FragmentAListener {
+
 
 
     private ViewPager mViewpager;
     public String name1 = ("Connection");
     MainActivity guide = new MainActivity();
+    gamemode_options1 fragmentA;
+
+    int x;
+    int y;
+    int zx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,35 +29,40 @@ public class Connection extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mViewpager = (ViewPager) findViewById(R.id.options);
-        ImageButton gameoptions;
+        ImageButton gameoptionsb;
         ImageButton gamestart;
-        gameoptions = findViewById(R.id.spieloptionen);
+        gameoptionsb = findViewById(R.id.spieloptionen);
         gamestart = findViewById(R.id.launchgame);
 
+        gameoptionsb.setOnClickListener(v -> openOptions());
 
 
-        gameoptions.setOnClickListener(new View.OnClickListener() {
+        gamestart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                setupViewPager(mViewpager);
-                setViewPager(0);
-            }
 
+            public void onClick(View v) {
+                Toast.makeText(Connection.this, "Zeit" + x, Toast.LENGTH_SHORT).show();
+               System.out.printf("Time %d Score %d Difficulty %d", x, y, zx);
+
+            }
         });
+
+
+
+
     }
 
 
 
 
 
-    public void setViewPager(int fragmentNumber){
-        mViewpager.setCurrentItem(fragmentNumber);
+    public void setViewPager(int fragmentNumber){ mViewpager.setCurrentItem(fragmentNumber);
     }
 
     private void setupViewPager(ViewPager viewpager){
         options adapter = new options(getSupportFragmentManager());
-        adapter.addFragment(new gameoptions(), "gameoptions");
-        adapter.addFragment(new gamemode_options1(), "Color-hunt options");
+        //adapter.addFragment(new gameoptions(), "gameoptions");
+        //adapter.addFragment(new gamemode_options1(), "Color-hunt options");
        /* adapter.addFragment(new options_fragment(), "configuration");
         adapter.addFragment(new options_fragment(), "configuration");*/
         viewpager.setAdapter(adapter);
@@ -77,4 +90,18 @@ public class Connection extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }*/
+
+    public void openOptions(){
+        Intent intent1 = new Intent(this, gameoptions.class);
+        startActivity(intent1);
+
+    }
+    public void onInputASent(int inputt, int inputs, int z) {
+
+        x = inputt;
+        y = inputs;
+        zx = z;
+
+    }
+
 }
