@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity{
     private options optionsAdapter;
     private ViewPager mViewpager;
     public String name1 = ("SAT");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
