@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -23,6 +22,14 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
     static int x;
     static int y;
     static int zx;
+    int maxtime;
+    int maxscore;
+    int difficulty;
+    int mode;
+    int timeReceive;
+    int ScoreReceived;
+    int difficultyReceived;
+    int modeReceived;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,13 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
 
         gameoptionsb.setOnClickListener(v -> openOptions());
         onInputASent(x, y ,zx);
+        Intent intent = getIntent();
+        maxtime = intent.getIntExtra("Zeit", timeReceive);
+        maxscore = intent.getIntExtra("MaxScore", ScoreReceived);
+        difficulty = intent.getIntExtra("Difficulty", difficultyReceived);
+        mode = intent.getIntExtra("Gamemode", modeReceived);
+        Toast.makeText(Connection.this, "Zeit" + maxscore, Toast.LENGTH_SHORT).show();
+
 
 
         gamestart.setOnClickListener(new View.OnClickListener() {
@@ -44,9 +58,13 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
 
             public void onClick(View v) {
 
-                Toast.makeText(Connection.this, "Zeit" + x, Toast.LENGTH_SHORT).show();
-               System.out.printf("Time %d Score %d Difficulty %d", x, y, zx);
-               Log.d("LOG", "hello" + x);
+                Intent intent1 = new Intent(getBaseContext(), game_start.class);
+                intent1.putExtra("Zeit",maxtime);
+                intent1.putExtra("MaxScore", maxscore);
+                intent1.putExtra("Difficulty", difficulty);
+                intent1.putExtra("Gamemode", mode );
+
+                startActivity(intent1);
 
             }
         });
@@ -110,7 +128,7 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
         x = inputt;
         y = inputs;
         zx = z;
-        Toast.makeText(Connection.this, "Zeit" + x, Toast.LENGTH_SHORT).show();
+
 
     }
 

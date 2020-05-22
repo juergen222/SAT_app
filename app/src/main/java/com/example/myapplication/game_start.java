@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,11 +18,12 @@ public class game_start extends AppCompatActivity {
 
     boolean hit;
     //MqttAndroidClient client;
-    int score;
+    int score =4;
     int time;
     volatile boolean new_score = false;
     ImageView color;
     ImageView hit_notification;
+
     int hit_notificationID;
     gamemode_options1 einstellungen;
     int zeit, maxscore, difficulty;
@@ -36,15 +38,14 @@ public class game_start extends AppCompatActivity {
     int modeReceived;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        zeit = einstellungen.x;
-        maxscore = einstellungen.y;
-        difficulty = einstellungen.z;
-        gamemode = einstellungen.gamemode;
+        setContentView(R.layout.game_launch);
         color = findViewById(R.id.color);
-        color.setImageResource(R.color.white);
+
+        color.setImageResource(R.drawable.white);
 
 
 
@@ -96,11 +97,13 @@ public class game_start extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = getIntent();
+
+
+        Intent intent = getIntent(); // Date Transportation
         maxtime = intent.getIntExtra("Zeit", timeReceive);
         maxscore = intent.getIntExtra("MaxScore", ScoreReceived);
         difficulty = intent.getIntExtra("Difficulty", difficultyReceived);
-        mode = intent.getIntExtra("gamemode", modeReceived);
+        mode = intent.getIntExtra("Gamemode", modeReceived);
 
         try {
             start_game();
@@ -113,6 +116,9 @@ public class game_start extends AppCompatActivity {
     public void start_game() throws InterruptedException {
 
 
+        TextView scoreText = findViewById(R.id.score);
+        TextView TimeText = findViewById(R.id.time);
+        TextView PlayerText = findViewById(R.id.player);
         int vergleichswert;
         boolean player1Active = true;
         boolean player2Active = false;
@@ -148,9 +154,9 @@ public class game_start extends AppCompatActivity {
 
             while (time < maxtime || player1.score < maxscore || player2.score < maxscore) {
 
-                while (!new_score) {
-                }
-                new_score = false;
+               // while (!new_score) {
+               //}
+                //new_score = false;
                 //start_command();
 
                 vergleichswert = randomImage(); // random number responsible for the colour generated
@@ -183,6 +189,7 @@ public class game_start extends AppCompatActivity {
                     playerchanges(player1, addpoints);
                     player1Active = false;
                     player2Active =true;
+                    updateText(scoreText, TimeText, PlayerText, player1);
 
                 }
                 else
@@ -190,6 +197,8 @@ public class game_start extends AppCompatActivity {
                     playerchanges(player2, addpoints);
                     player1Active = true;
                     player2Active = false;
+                    updateText(scoreText, TimeText, PlayerText, player2);
+
                 }
 
 
@@ -232,11 +241,7 @@ public class game_start extends AppCompatActivity {
             playerNumber = playerNumbr;
         }
 
-        public void changescore(int score) {
-            if (hit == true) {
-            }
 
-        }
 
     }
 
@@ -247,13 +252,13 @@ public class game_start extends AppCompatActivity {
         eQ = random;
 
         if (random == 1) ;
-        color.setImageResource(R.color.black);
+        color.setImageResource(R.drawable.black);
         if (random > 1 && random < 4) ;
-        color.setImageResource(R.color.blue);
+        color.setImageResource(R.drawable.blue);
         if (random > 3 && random < 6) ;
-        color.setImageResource(R.color.red);
+        color.setImageResource(R.drawable.red);
         if (random > 5 && random < 9) ;
-        color.setImageResource(R.color.yellow);
+        color.setImageResource(R.drawable.yellow);
         return eQ;
     }
 
@@ -284,6 +289,18 @@ public class game_start extends AppCompatActivity {
         hit_notification.setVisibility(View.INVISIBLE);
 
     }
+
+    public void updateText(TextView x, TextView y, TextView z, player p)
+    {
+        x.setText("" + p.score);
+        y.setText(""+time);
+        z.setText("" + p.playerNumber);
+
+    }
+
+
+
+
 
 
     /*private void setSubscription(){
