@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,6 +16,7 @@ public class gameoptions extends AppCompatActivity implements gamemode_options1.
 
     private ImageButton colorHunt;
     private Fragment fragmentA;
+    int mode;
 
 
 
@@ -43,11 +45,17 @@ public class gameoptions extends AppCompatActivity implements gamemode_options1.
          @Override
          public void onClick(View v) {
 
+             mode = 0;
              /*getSupportFragmentManager().beginTransaction()
                      .replace(R.id.ChOpt, fragmentA)
                      .commit();*/
             //((Connection)getActivity()).setViewPager(1);
              fm.beginTransaction().add(R.id.gameO, change).commit();
+
+             Intent intent = new Intent(gameoptions.this, game_start.class);
+             intent.putExtra("gamemode", mode );
+
+
          }
      });
 

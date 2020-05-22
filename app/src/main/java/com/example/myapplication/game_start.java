@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -8,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 
 public class game_start extends AppCompatActivity {
@@ -15,13 +18,23 @@ public class game_start extends AppCompatActivity {
     boolean hit;
     //MqttAndroidClient client;
     int score;
+    int time;
     volatile boolean new_score = false;
     ImageView color;
+    ImageView hit_notification;
+    int hit_notificationID;
     gamemode_options1 einstellungen;
     int zeit, maxscore, difficulty;
     int gamemode;
     int mode;
     int random;
+    int timeReceive;
+    int maxtime;
+    int maxScore;
+    int ScoreReceived;
+    int difficultyReceived;
+    int modeReceived;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,14 +96,28 @@ public class game_start extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        start_game();
+        Intent intent = getIntent();
+        maxtime = intent.getIntExtra("Zeit", timeReceive);
+        maxscore = intent.getIntExtra("MaxScore", ScoreReceived);
+        difficulty = intent.getIntExtra("Difficulty", difficultyReceived);
+        mode = intent.getIntExtra("gamemode", modeReceived);
+
+        try {
+            start_game();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public void start_game() {
-        int time = 0;
-        int maxScore = 0;
+    public void start_game() throws InterruptedException {
+
+
         int vergleichswert;
+        boolean player1Active = true;
+        boolean player2Active = false;
+        int addpoints;          //points added to player score
+
 
 
 
@@ -101,7 +128,7 @@ public class game_start extends AppCompatActivity {
         // TODO use score for game
         while (!new_score) {
         }
-        ArrayList<String> colors = new ArrayList<String>();
+        ArrayList<String> colors = new ArrayList<String>();     //colour index
         colors.add("failed");
         colors.add("black");
         colors.add("blue");
@@ -113,21 +140,56 @@ public class game_start extends AppCompatActivity {
         colors.add("yellow");
 
 
-        //start_command();
-        while (!new_score) {
-        }
-        new_score = false;
 
 
-        if (mode == 0) {
+
+
+        if (mode == 0) { // if mode = colorHunt
 
             while (time < maxtime || player1.score < maxscore || player2.score < maxscore) {
 
-                vergleichswert = randomImage();
+                while (!new_score) {
+                }
+                new_score = false;
+                //start_command();
 
-                if (score == vergleichswert) {
+                vergleichswert = randomImage(); // random number responsible for the colour generated
 
-                    //hit black
+                if(score == vergleichswert) { //pointsystem
+
+                    addpoints = 800;
+                    hit_notificationID = 1;
+
+
+
+                }
+                else if(score == (vergleichswert +-1 ) )
+                {
+                    addpoints = 400;
+                    hit_notificationID =2;
+                }
+                else
+                {
+                    addpoints = 0;
+                    hit_notificationID =3;
+
+
+                }
+                appearNotification(hit_notificationID);
+
+                if (player1Active == true) // turnsystem
+                {
+
+                    playerchanges(player1, addpoints);
+                    player1Active = false;
+                    player2Active =true;
+
+                }
+                else
+                {
+                    playerchanges(player2, addpoints);
+                    player1Active = true;
+                    player2Active = false;
                 }
 
 
@@ -158,7 +220,7 @@ public class game_start extends AppCompatActivity {
         }
     }*/
 
-    public class player {
+    public class player {  //player class
 
         int score;
         int playerNumber;
@@ -178,7 +240,7 @@ public class game_start extends AppCompatActivity {
 
     }
 
-    public int randomImage() {
+    public int randomImage() {      //generates random number and colour image
         random = new Random().nextInt(8) + 1;
         int eQ;
 
@@ -195,6 +257,33 @@ public class game_start extends AppCompatActivity {
         return eQ;
     }
 
+    public void playerchanges(player x, int value )
+    {
+        x.score = x.score + value;
+
+
+    }
+
+    public void appearNotification(int note) throws InterruptedException {
+        hit_notification = findViewById(R.id.note);
+        hit_notification.setVisibility(View.VISIBLE);
+        if(note == 1)
+        {
+            hit_notification.setImageResource(R.drawable.hit_message);
+        }
+        if(note == 2)
+        {
+            hit_notification.setImageResource(R.drawable.close_note);
+        }
+        if(note == 3)
+        {
+            hit_notification.setImageResource(R.drawable.missed_note);
+        }
+
+        TimeUnit.SECONDS.sleep(10);
+        hit_notification.setVisibility(View.INVISIBLE);
+
+    }
 
 
     /*private void setSubscription(){

@@ -100,6 +100,15 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
                     Intent intent = new Intent(getActivity(), Connection.class);
                     startActivity(intent);
 
+                    Intent intent1 = new Intent(getActivity().getBaseContext(), game_start.class);
+                    intent1.putExtra("Zeit",x);
+                    intent1.putExtra("MaxScore", y);
+                    intent1.putExtra("Difficulty", z);
+
+
+                    getActivity().startActivity(intent1);
+
+
 
                 }
             });
