@@ -37,6 +37,7 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
     private FragmentAListener listener;
     boolean configurated =false;
     private ImageButton ok;
+    int gamemode = 1; // 1 is colourhunt
 
     public interface FragmentAListener{
 
@@ -92,6 +93,8 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
                     x = Integer.parseInt(zeit);
                     y = Integer.parseInt(maxScore);
                     listener.onInputASent(x, y, z);
+
+
 
 
                     Intent intent = new Intent(getActivity(), Connection.class);

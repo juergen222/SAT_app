@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -17,11 +18,11 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
     private ViewPager mViewpager;
     public String name1 = ("Connection");
     MainActivity guide = new MainActivity();
-    gamemode_options1 fragmentA;
+    gamemode_options1 einstellungenz;
 
-    int x;
-    int y;
-    int zx;
+    static int x;
+    static int y;
+    static int zx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +36,17 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
         gamestart = findViewById(R.id.launchgame);
 
         gameoptionsb.setOnClickListener(v -> openOptions());
+        onInputASent(x, y ,zx);
 
 
         gamestart.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View v) {
+
                 Toast.makeText(Connection.this, "Zeit" + x, Toast.LENGTH_SHORT).show();
                System.out.printf("Time %d Score %d Difficulty %d", x, y, zx);
+               Log.d("LOG", "hello" + x);
 
             }
         });
@@ -50,7 +54,12 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
 
 
 
+
+
     }
+
+
+
 
 
 
@@ -101,7 +110,9 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
         x = inputt;
         y = inputs;
         zx = z;
+        Toast.makeText(Connection.this, "Zeit" + x, Toast.LENGTH_SHORT).show();
 
     }
+
 
 }

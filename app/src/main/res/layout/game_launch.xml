@@ -15,4 +15,13 @@
 
     />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/color"
+        android:layout_marginLeft="190dp"
+        android:layout_marginTop="160dp"
+
+        />
+
 </RelativeLayout>
