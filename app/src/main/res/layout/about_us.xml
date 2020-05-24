@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+
+    >
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:text="About US"
+        android:textSize="50sp"
+        />
+    <ScrollView android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/green_rectangle"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+
+
+                android:id="@+id/intro"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="3dp"
+
+                />
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="130dp"
+            android:text="Tobias main goal was to setup the whole system which detects where the arrows hit the target, so that includes the software which controlls the cameras and the sensor. His main other task was to setup the communcation between the app and the rasperry pi which controlls the hardware"
+            android:id="@+id/tobias"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="3dp"
+
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="500dp"
+                android:id="@+id/juergen"
+                android:text=""
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="3dp"
+
+
+                />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+
+</RelativeLayout>
+
+

@@ -9,7 +9,7 @@
             app:showAsAction="ifRoom"
             />
 
-        <item android:id="@+id/info"
+        <item android:id="@+id/about_us"
             android:title="about us"
             app:showAsAction="never"
             />

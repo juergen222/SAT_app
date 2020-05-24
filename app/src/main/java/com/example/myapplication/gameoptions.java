@@ -45,9 +45,7 @@ public class gameoptions extends AppCompatActivity implements gamemode_options1.
          public void onClick(View v) {
 
              mode = 0;
-             /*getSupportFragmentManager().beginTransaction()
-                     .replace(R.id.ChOpt, fragmentA)
-                     .commit();*/
+
             //((Connection)getActivity()).setViewPager(1);
              fm.beginTransaction().add(R.id.gameO, change).commit();
 

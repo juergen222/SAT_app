@@ -98,11 +98,15 @@ public class MainActivity extends AppCompatActivity{
             case R.id.config:
                 setViewPager(0);
                 return true;
-
+            case R.id.about_us:
+            Intent intent1 = new Intent (this, about_us.class);
+            startActivity(intent1);
+            return true;
             case R.id.home:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
+
 
         }
         return super.onOptionsItemSelected(item);

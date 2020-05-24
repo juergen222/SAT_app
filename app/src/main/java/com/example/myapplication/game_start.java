@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,7 +26,7 @@ public class game_start extends AppCompatActivity {
     ImageView hit_notification;
 
     int hit_notificationID;
-    gamemode_options1 einstellungen;
+
     int zeit, maxscore, difficulty;
     int gamemode;
     int mode;
@@ -36,16 +37,17 @@ public class game_start extends AppCompatActivity {
     int ScoreReceived;
     int difficultyReceived;
     int modeReceived;
+    connection_lost fragment = new connection_lost();
+    FragmentManager fm = getSupportFragmentManager();
+
+
 
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.game_launch);
-        color = findViewById(R.id.color);
 
-        color.setImageResource(R.drawable.white);
 
 
 
@@ -69,6 +71,7 @@ public class game_start extends AppCompatActivity {
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     // Something went wrong e.g. connection timeout or firewall problems
                     // TODO Fragment for connection failure
+                     fm.beginTransaction().add(R.id.connection_lost, fragment).commit();
                 }
             });
         } catch (MqttException e) {
@@ -97,7 +100,10 @@ public class game_start extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        setContentView(R.layout.game_launch);
+        color = findViewById(R.id.color);
 
+        color.setImageResource(R.drawable.white);
 
         Intent intent = getIntent(); // Date Transportation
         maxtime = intent.getIntExtra("Zeit", timeReceive);
@@ -115,7 +121,7 @@ public class game_start extends AppCompatActivity {
 
     public void start_game() throws InterruptedException {
 
-
+        FragmentManager fm = getSupportFragmentManager();
         TextView scoreText = findViewById(R.id.score);
         TextView TimeText = findViewById(R.id.time);
         TextView PlayerText = findViewById(R.id.player);
@@ -205,6 +211,10 @@ public class game_start extends AppCompatActivity {
                 //if ready for next score -> start_command();
             }
 
+           if (player1.score > player2.score)
+           {
+               //fm.beginTransaction().add(R.id.wi, fragment).commit();
+           }
 
         }
     }

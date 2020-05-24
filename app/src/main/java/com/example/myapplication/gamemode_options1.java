@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class gamemode_options1 extends Fragment implements AdapterView.OnItemSelectedListener{
-    private static final String TAG = "fragment";
+        private static final String TAG = "fragment";
 
 
     public gamemode_options1(){
@@ -94,8 +94,7 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
                     y = Integer.parseInt(maxScore);
                     listener.onInputASent(x, y, z);
 
-
-
+                    configurated = true;
 
                     //Intent intent = new Intent(getActivity(), Connection.class);
                     //startActivity(intent);
@@ -105,6 +104,7 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
                     intent1.putExtra("MaxScore", y);
                     intent1.putExtra("Difficulty", z);
                     intent1.putExtra("Gamemode", gamemode);
+                    intent1.putExtra("configurated", configurated);
 
                     getActivity().startActivity(intent1);
 
@@ -116,7 +116,7 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
 
 
 
-        configurated = true;
+
 
 
 

@@ -34,6 +34,10 @@
             android:name=".gameoptions"
             android:label="@string/title_activity_connection"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".about_us"
+            android:label="about_us"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
 
 

@@ -2,10 +2,14 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -30,6 +34,8 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
     int ScoreReceived;
     int difficultyReceived;
     int modeReceived;
+    boolean configurated;
+    boolean configuratedReceived = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,26 +55,30 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
         maxscore = intent.getIntExtra("MaxScore", ScoreReceived);
         difficulty = intent.getIntExtra("Difficulty", difficultyReceived);
         mode = intent.getIntExtra("Gamemode", modeReceived);
-        Toast.makeText(Connection.this, "Zeit" + maxscore, Toast.LENGTH_SHORT).show();
+        configurated = intent.getBooleanExtra("configurated", configuratedReceived);
+        //Toast.makeText(Connection.this, "Zeit" + maxscore, Toast.LENGTH_SHORT).show();
+
+        if(configurated) {
+
+            gamestart.setOnClickListener(new View.OnClickListener() {
+                @Override
+
+                public void onClick(View v) {
+
+                    Intent intent1 = new Intent(getBaseContext(), game_start.class);
+                    intent1.putExtra("Zeit", maxtime);
+                    intent1.putExtra("MaxScore", maxscore);
+                    intent1.putExtra("Difficulty", difficulty);
+                    intent1.putExtra("Gamemode", mode);
 
 
+                    startActivity(intent1);
 
-        gamestart.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-            public void onClick(View v) {
-
-                Intent intent1 = new Intent(getBaseContext(), game_start.class);
-                intent1.putExtra("Zeit",maxtime);
-                intent1.putExtra("MaxScore", maxscore);
-                intent1.putExtra("Difficulty", difficulty);
-                intent1.putExtra("Gamemode", mode );
-
-                startActivity(intent1);
-
-            }
-        });
-
+                }
+            });
+        }
+        else
+        {Toast.makeText(Connection.this, "You need to configurate", Toast.LENGTH_SHORT).show();}
 
 
 
@@ -130,6 +140,29 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
         zx = z;
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.option_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.config:
+                setViewPager(0);
+                return true;
+
+            case R.id.home:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
