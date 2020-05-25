@@ -1,10 +1,13 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,18 +15,18 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 
 public class game_start extends AppCompatActivity {
 
     boolean hit;
     //MqttAndroidClient client;
-    int score =4;
-    int time;
+    int score = 4;
+    int time = 0;
     volatile boolean new_score = false;
     ImageView color;
     ImageView hit_notification;
+
 
     int hit_notificationID;
 
@@ -39,6 +42,7 @@ public class game_start extends AppCompatActivity {
     int modeReceived;
     connection_lost fragment = new connection_lost();
     FragmentManager fm = getSupportFragmentManager();
+    final Handler handler = new Handler();
 
 
 
@@ -48,6 +52,7 @@ public class game_start extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.game_launch);
 
 
 
@@ -100,7 +105,12 @@ public class game_start extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setContentView(R.layout.game_launch);
+
+
+
+
+           // TimeUnit.SECONDS.sleep(10);
+
         color = findViewById(R.id.color);
 
         color.setImageResource(R.drawable.white);
@@ -111,15 +121,13 @@ public class game_start extends AppCompatActivity {
         difficulty = intent.getIntExtra("Difficulty", difficultyReceived);
         mode = intent.getIntExtra("Gamemode", modeReceived);
 
-        try {
-            start_game();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        start_game();
+
 
     }
 
-    public void start_game() throws InterruptedException {
+    public void start_game(){
 
         FragmentManager fm = getSupportFragmentManager();
         TextView scoreText = findViewById(R.id.score);
@@ -138,8 +146,7 @@ public class game_start extends AppCompatActivity {
 
         //start_command();
         // TODO use score for game
-        while (!new_score) {
-        }
+        //while (!new_score) { }
         ArrayList<String> colors = new ArrayList<String>();     //colour index
         colors.add("failed");
         colors.add("black");
@@ -158,14 +165,17 @@ public class game_start extends AppCompatActivity {
 
         if (mode == 0) { // if mode = colorHunt
 
-            while (time < maxtime || player1.score < maxscore || player2.score < maxscore) {
+            while (player1.score < maxscore || player2.score < maxscore) {
 
                // while (!new_score) {
                //}
                 //new_score = false;
                 //start_command();
 
-                vergleichswert = randomImage(); // random number responsible for the colour generated
+
+                vergleichswert = randomImage();
+                // random number responsible for the colour generated
+
 
                 if(score == vergleichswert) { //pointsystem
 
@@ -187,9 +197,10 @@ public class game_start extends AppCompatActivity {
 
 
                 }
+                //SystemClock.sleep(5000);
                 appearNotification(hit_notificationID);
 
-                if (player1Active == true) // turnsystem
+                if (player1Active) // turnsystem
                 {
 
                     playerchanges(player1, addpoints);
@@ -198,7 +209,7 @@ public class game_start extends AppCompatActivity {
                     updateText(scoreText, TimeText, PlayerText, player1);
 
                 }
-                else
+                else if(player2Active)
                 {
                     playerchanges(player2, addpoints);
                     player1Active = true;
@@ -213,8 +224,15 @@ public class game_start extends AppCompatActivity {
 
            if (player1.score > player2.score)
            {
-               //fm.beginTransaction().add(R.id.wi, fragment).commit();
+               //fm.beginTransaction().add(R.id.winner_message, fragment).commit();
+               Toast.makeText(this, "Player 1 won the game", Toast.LENGTH_SHORT).show();
+
            }
+           else if (player2.score > player1.score)
+           {
+               Toast.makeText(this, "Player 2 won the game", Toast.LENGTH_SHORT).show();
+           }
+
 
         }
     }
@@ -279,32 +297,47 @@ public class game_start extends AppCompatActivity {
 
     }
 
-    public void appearNotification(int note) throws InterruptedException {
-        hit_notification = findViewById(R.id.note);
-        hit_notification.setVisibility(View.VISIBLE);
-        if(note == 1)
-        {
-            hit_notification.setImageResource(R.drawable.hit_message);
-        }
-        if(note == 2)
-        {
-            hit_notification.setImageResource(R.drawable.close_note);
-        }
-        if(note == 3)
-        {
-            hit_notification.setImageResource(R.drawable.missed_note);
-        }
+    public void appearNotification(int note){
 
-        TimeUnit.SECONDS.sleep(10);
-        hit_notification.setVisibility(View.INVISIBLE);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hit_notification = findViewById(R.id.note);
+                hit_notification.setVisibility(View.VISIBLE);
+                if(note == 1)
+                {
+                    hit_notification.setImageResource(R.drawable.hit_message);
+                }
+                if(note == 2)
+                {
+                    hit_notification.setImageResource(R.drawable.close_note);
+                }
+                if(note == 3)
+                {
+                    hit_notification.setImageResource(R.drawable.missed_note);
+                }
+
+
+                hit_notification.setVisibility(View.INVISIBLE);
+
+            }
+        },5000);
 
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateText(TextView x, TextView y, TextView z, player p)
     {
         x.setText("" + p.score);
         y.setText(""+time);
         z.setText("" + p.playerNumber);
+
+    }
+    public void fakeValue(int score)
+    {
+
+
+        score = 3;
 
     }
 

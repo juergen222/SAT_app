@@ -37,7 +37,7 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
     private FragmentAListener listener;
     boolean configurated =false;
     private ImageButton ok;
-    int gamemode = 1; // 1 is colourhunt
+    int gamemode = 0; // 1 is colourhunt
 
     public interface FragmentAListener{
 
