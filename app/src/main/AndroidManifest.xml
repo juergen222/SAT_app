@@ -26,12 +26,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".game_start"
+            android:name=".GameStartActivity"
             android:label="game_start"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".gameoptions"
+            android:name=".GameOptionsActivity"
             android:label="@string/title_activity_connection"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".about_us"

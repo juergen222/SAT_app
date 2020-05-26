@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-public class gameoptions extends AppCompatActivity implements gamemode_options1.FragmentAListener{
+public class GameOptionsActivity extends AppCompatActivity implements GamemodeOptionsFragment.FragmentAListener{
     //private static final String TAG = "fragment";
 
 
@@ -23,7 +23,7 @@ public class gameoptions extends AppCompatActivity implements gamemode_options1.
     @Nullable
     @Override
     //public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //View view = inflater.inflate(R.layout.gameoptions, container, false);
+        //View view = inflater.inflate(R.layout.GameOptionsActivity, container, false);
 
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class gameoptions extends AppCompatActivity implements gamemode_options1.
         setContentView(R.layout.gameoptions);
         fragmentA = new Fragment();
 
-        gamemode_options1 change = new gamemode_options1();
+        GamemodeOptionsFragment change = new GamemodeOptionsFragment();
         FragmentManager fm = getSupportFragmentManager();
     //oandroidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);

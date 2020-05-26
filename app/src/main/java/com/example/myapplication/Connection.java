@@ -7,21 +7,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 
-public class Connection extends AppCompatActivity implements gamemode_options1.FragmentAListener {
+public class Connection extends AppCompatActivity implements GamemodeOptionsFragment.FragmentAListener {
 
 
 
     private ViewPager mViewpager;
     public String name1 = ("Connection");
     MainActivity guide = new MainActivity();
-    gamemode_options1 einstellungenz;
+    GamemodeOptionsFragment einstellungenz;
 
     static int x;
     static int y;
@@ -58,14 +57,14 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
         configurated = intent.getBooleanExtra("configurated", configuratedReceived);
         //Toast.makeText(Connection.this, "Zeit" + maxscore, Toast.LENGTH_SHORT).show();
 
-        if(configurated) {
+        //if(configurated) {
 
             gamestart.setOnClickListener(new View.OnClickListener() {
                 @Override
 
                 public void onClick(View v) {
 
-                    Intent intent1 = new Intent(getBaseContext(), game_start.class);
+                    Intent intent1 = new Intent(getBaseContext(), GameStartActivity.class);
                     intent1.putExtra("Zeit", maxtime);
                     intent1.putExtra("MaxScore", maxscore);
                     intent1.putExtra("Difficulty", difficulty);
@@ -76,9 +75,9 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
 
                 }
             });
-        }
-        else
-        {Toast.makeText(Connection.this, "You need to configurate", Toast.LENGTH_SHORT).show();}
+        //}
+       // else
+        //{Toast.makeText(Connection.this, "You need to configurate", Toast.LENGTH_SHORT).show();}
 
 
 
@@ -98,8 +97,8 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
 
     private void setupViewPager(ViewPager viewpager){
         options adapter = new options(getSupportFragmentManager());
-        //adapter.addFragment(new gameoptions(), "gameoptions");
-        //adapter.addFragment(new gamemode_options1(), "Color-hunt options");
+        //adapter.addFragment(new GameOptionsActivity(), "GameOptionsActivity");
+        //adapter.addFragment(new GamemodeOptionsFragment(), "Color-hunt options");
        /* adapter.addFragment(new options_fragment(), "configuration");
         adapter.addFragment(new options_fragment(), "configuration");*/
         viewpager.setAdapter(adapter);
@@ -129,7 +128,7 @@ public class Connection extends AppCompatActivity implements gamemode_options1.F
     }*/
 
     public void openOptions(){
-        Intent intent1 = new Intent(this, gameoptions.class);
+        Intent intent1 = new Intent(this, GameOptionsActivity.class);
         startActivity(intent1);
 
     }

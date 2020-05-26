@@ -16,11 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class gamemode_options1 extends Fragment implements AdapterView.OnItemSelectedListener{
+public class GamemodeOptionsFragment extends Fragment implements AdapterView.OnItemSelectedListener{
         private static final String TAG = "fragment";
 
 
-    public gamemode_options1(){
+    public GamemodeOptionsFragment(){
 
 
     }
@@ -69,7 +69,7 @@ public class gamemode_options1 extends Fragment implements AdapterView.OnItemSel
         EditText maxscore = view.findViewById(R.id.maxScore);
 
         ArrayAdapter<CharSequence> difficulties = ArrayAdapter.createFromResource(getActivity() , R.array.difficultys, android.R.layout.simple_spinner_item);
-        //ArrayAdapter<String> difficulties = new ArrayAdapter<String>(gamemode_options1.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.difficultys));
+        //ArrayAdapter<String> difficulties = new ArrayAdapter<String>(GamemodeOptionsFragment.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.difficultys));
         Spinner difficulty = view.findViewById(R.id.difficulty);
         difficulties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         difficulty.setAdapter(difficulties);
