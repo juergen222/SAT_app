@@ -105,11 +105,13 @@ public class GameStartActivity extends AppCompatActivity {
             return;
         if(colorRing == activeColor)
             currentPlayer.addScore(800);
+        //TODO Logik für Punkte
         if(currentPlayer.score >= maxscore)
         {
             winner = currentPlayer.number;
             inProgress = false;
             Toast.makeText(this, "Winner"+ winner, Toast.LENGTH_SHORT).show();
+            //TODO Result Activity
             fm.beginTransaction().add(R.id.win_lost, winner_declare).commit();
             return;
         }
@@ -117,12 +119,11 @@ public class GameStartActivity extends AppCompatActivity {
         if(currentPlayer.number == 1)
             currentPlayer = player2;
         else
-
             currentPlayer = player1;
 
         activeColor = randomColor();
         updateText();
-
+        start_command(1);
     }
 
    /* Runnable gameLoop = new Runnable() {
@@ -201,6 +202,7 @@ public class GameStartActivity extends AppCompatActivity {
     Handler handler = new Handler(Looper.getMainLooper());
     FragmentManager fm = getSupportFragmentManager();
 
+    MqttAndroidClient client;
 
     ConnectionLostFragment fragment = new ConnectionLostFragment();
     WinnerMessageFragment winner_declare = new WinnerMessageFragment();
@@ -218,12 +220,9 @@ public class GameStartActivity extends AppCompatActivity {
 
 
 
-
-
         String clientId = MqttClient.generateClientId();
-        MqttAndroidClient client =
-                new MqttAndroidClient(this.getApplicationContext(), "tcp://broker.hivemq.com:1883",
-                        clientId);
+        client = new MqttAndroidClient(this, "tcp://10.0.0.1:1883",
+                clientId);
 
         try {
             IMqttToken token = client.connect();
@@ -242,7 +241,7 @@ public class GameStartActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     // Something went wrong e.g. connection timeout or firewall problems
-                    // TODO Fragment for connection failure
+                    // TODO Dialog Box and back to Main Menu
                      fm.beginTransaction().add(R.id.connection_lost, fragment).commit();
                 }
             });
@@ -251,25 +250,23 @@ public class GameStartActivity extends AppCompatActivity {
                 public void connectionLost(Throwable cause) {
                     Toast.makeText(GameStartActivity.this, "ERROR Connecting", Toast.LENGTH_SHORT).show();
 
-                    // TODO Fragment for connection failure
+                    // TODO Dialog Box and back to Main Menu
                 }
 
                 @Override
                 public void messageArrived(String topic, MqttMessage message) {
-
                     userActed(Integer.parseInt(new String(message.getPayload())));
-
                 }
 
                 @Override
                 public void deliveryComplete(IMqttDeliveryToken token) {
-
                 }
             });
 
         } catch (MqttException e) {
             e.printStackTrace();
             Toast.makeText(this, "ERROR Connecting", Toast.LENGTH_SHORT).show();
+            //TODO Dialog Box and back to Main Menu
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
@@ -296,37 +293,17 @@ public class GameStartActivity extends AppCompatActivity {
 
         // public void run() {
 
-
         startGame();
-
 
         //}
 
         //};
         //
-
-
     }
 
-    public void startGame() {
-
-        activeColor = randomColor();
-        currentPlayer = player1;
-        updateText();
-
-
-
-
-
-
-
-    }
-
-
-
-    /*private void start_command(int mode) {
+    private void start_command(int mode) {
         String topic = "masterPhone";
-        String message;
+        String message = "start1";
 
         if(mode == 1)
         {
@@ -342,7 +319,14 @@ public class GameStartActivity extends AppCompatActivity {
         } catch (MqttException e) {
             e.printStackTrace();
         }
-    }*/
+    }
+
+    public void startGame() {
+        activeColor = randomColor();
+        currentPlayer = player1;
+        updateText();
+        start_command(1);
+    }
 
     public class Player {  //player class
 
@@ -380,7 +364,6 @@ public class GameStartActivity extends AppCompatActivity {
         return random;
     }
 
-
     public void appearNotification(int note, ImageView x) {
 
 
@@ -404,7 +387,6 @@ public class GameStartActivity extends AppCompatActivity {
 
     }
 
-
     @SuppressLint("SetTextI18n")
     public void updateText() {
 
@@ -414,26 +396,4 @@ public class GameStartActivity extends AppCompatActivity {
 
 
     }
-
-
-    public void gameFinished() {
-
-        if (player1.score > player2.score) {
-
-            //Toast.makeText(this, "Player 1 won the game", Toast.LENGTH_SHORT).show();
-            winner = 1;
-            fm.beginTransaction().add(R.id.win_lost, winner_declare).commit();
-
-        } else if (player2.score > player1.score) {
-            //Toast.makeText(this, "Player 2 won the game", Toast.LENGTH_SHORT).show();
-            winner = 2;
-            fm.beginTransaction().add(R.id.win_lost, winner_declare).commit();
-        }
-
-
-    }
-
-
-
-
 }
