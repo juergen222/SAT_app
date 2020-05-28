@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
     android:layout_height="500dp"
-    android:background="@drawable/backround_choose"
+    android:background="@drawable/backround_choose2"
     android:layout_marginTop="100dp"
     >
 
@@ -16,14 +16,7 @@
         android:layout_centerHorizontal="true"
         android:textSize="30dp"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="40dp"
-        android:textSize="20dp"
-        />
+
     <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -32,22 +25,15 @@
         android:layout_marginLeft="40dp"
         android:textSize="20dp"
     />
-    <TextView
+   // <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Difficulty"
+    android:text="Difficulty (not required for colorHunt)"
         android:layout_marginTop="160dp"
         android:layout_marginLeft="40dp"
         android:textSize="20dp"
     />
-    <EditText
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="40dp"
-        android:inputType="number"
-        />
+
 
     <EditText
         android:id="@+id/maxScore"

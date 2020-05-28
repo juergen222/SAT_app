@@ -64,11 +64,10 @@ public class GameStartActivity extends AppCompatActivity {
 
 
     int hit_notificationID;
-    int timeReceive;
-    int maxtime = 0;
-    int maxScore = 5000;
+
+
     int ScoreReceived = 5000;
-    int difficultyReceived = 0;
+
     int modeReceived = 0;
     /*
             1. Farbe anzeigen (random) randomColor
@@ -84,9 +83,12 @@ public class GameStartActivity extends AppCompatActivity {
     Player player1 = new Player(0, 1);
     Player player2 = new Player(0, 2);
     Player currentPlayer;
+    Player secondaryPlayer;
     int maxscore = 5000;
     int winner = 0;
+    int looser;
     boolean inProgress = true;
+    int round;
 
     int mode = 0;
     int random;
@@ -103,23 +105,47 @@ public class GameStartActivity extends AppCompatActivity {
     {
         if(!inProgress)
             return;
-        if(colorRing == activeColor)
+        if(colorRing == activeColor) {
             currentPlayer.addScore(800);
+            hit_notificationID = 1;
+
+        }
+
+        else if(colorRing != activeColor ) {
+
+            hit_notificationID = 3;
+        }
+        appearNotification(hit_notificationID, hitNotification);
+
         //TODO Logik für Punkte
         if(currentPlayer.score >= maxscore)
         {
             winner = currentPlayer.number;
+            looser = secondaryPlayer.number;
+
             inProgress = false;
             Toast.makeText(this, "Winner"+ winner, Toast.LENGTH_SHORT).show();
             //TODO Result Activity
-            fm.beginTransaction().add(R.id.win_lost, winner_declare).commit();
+            //fm.beginTransaction().add(R.id.win_lost, winner_declare).commit();
+            Intent intent  = new Intent(getBaseContext() , ScoreboardActivity.class );
+            intent.putExtra("Winner", winner);
+            intent.putExtra("score", currentPlayer.score);
+            intent.putExtra("scoreTwo", secondaryPlayer.score);
+            intent.putExtra("looser", looser);
+            startActivity(intent);
             return;
         }
 
-        if(currentPlayer.number == 1)
+        if(currentPlayer.number == 1) {
             currentPlayer = player2;
+            secondaryPlayer = player1;
+        }
         else
+        {
             currentPlayer = player1;
+            secondaryPlayer = player2;
+            round++;
+        }
 
         activeColor = randomColor();
         updateText();
@@ -196,6 +222,7 @@ public class GameStartActivity extends AppCompatActivity {
 
     TextView scoreText;
     TextView playerText;
+    TextView roundText;
     ImageView hitNotification;
     ImageView color;
 
@@ -217,7 +244,7 @@ public class GameStartActivity extends AppCompatActivity {
         color = findViewById(R.id.color);
         scoreText = findViewById(R.id.score);
         playerText = findViewById(R.id.player);
-
+        roundText = findViewById(R.id.round);
 
 
         String clientId = MqttClient.generateClientId();
@@ -242,7 +269,9 @@ public class GameStartActivity extends AppCompatActivity {
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     // Something went wrong e.g. connection timeout or firewall problems
                     // TODO Dialog Box and back to Main Menu
-                     fm.beginTransaction().add(R.id.connection_lost, fragment).commit();
+
+                     //fm.beginTransaction().add(R.id.connection_lost, fragment).commit();
+                    openConnectionLostMessage();
                 }
             });
             client.setCallback(new MqttCallback() {
@@ -251,6 +280,7 @@ public class GameStartActivity extends AppCompatActivity {
                     Toast.makeText(GameStartActivity.this, "ERROR Connecting", Toast.LENGTH_SHORT).show();
 
                     // TODO Dialog Box and back to Main Menu
+                    openConnectionLostMessage();
                 }
 
                 @Override
@@ -277,12 +307,13 @@ public class GameStartActivity extends AppCompatActivity {
 
         // color.setImageResource(R.drawable.white);
 
-       /* Intent intent = getIntent(); // Date Transportation
-        maxtime = intent.getIntExtra("Zeit", timeReceive);
+       Intent intent = getIntent(); // Date Transportation
+
         maxscore = intent.getIntExtra("MaxScore", ScoreReceived);
-        difficulty = intent.getIntExtra("Difficulty", difficultyReceived);
+
         mode = intent.getIntExtra("Gamemode", modeReceived);
-*/      /*startGame.setOnClickListener(new View.OnClickListener() {
+
+     /*startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -324,6 +355,7 @@ public class GameStartActivity extends AppCompatActivity {
     public void startGame() {
         activeColor = randomColor();
         currentPlayer = player1;
+        secondaryPlayer = player2;
         updateText();
         start_command(1);
     }
@@ -392,8 +424,23 @@ public class GameStartActivity extends AppCompatActivity {
 
         playerText.setText("" + currentPlayer.number);
         scoreText.setText("" + currentPlayer.score);
+        roundText.setText(""+ round);
+
 
 
 
     }
+
+    public void openWinMessage()
+    {
+
+
+    }
+    public void openConnectionLostMessage()
+    {
+        ConnectionLostDialogue dialogue = new ConnectionLostDialogue();
+        dialogue.show(getSupportFragmentManager(),"coonection lost dialogue");
+
+    }
+
 }

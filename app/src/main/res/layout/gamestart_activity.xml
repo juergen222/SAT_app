@@ -19,7 +19,7 @@
         android:textSize="23dp" />
 
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/round"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
@@ -44,7 +44,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="150dp"
-        android:layout_marginTop="120dp" />
+        android:layout_marginTop="169dp" />
 
 
     <ImageView

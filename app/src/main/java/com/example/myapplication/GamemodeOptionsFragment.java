@@ -65,7 +65,7 @@ public class GamemodeOptionsFragment extends Fragment implements AdapterView.OnI
 
         x = Integer.parseInt(zeit);
         y = Integer.parseInt(maxScore);*/
-        EditText time = view.findViewById(R.id.time);
+        //EditText time = view.findViewById(R.id.time);
         EditText maxscore = view.findViewById(R.id.maxScore);
 
         ArrayAdapter<CharSequence> difficulties = ArrayAdapter.createFromResource(getActivity() , R.array.difficultys, android.R.layout.simple_spinner_item);
@@ -85,12 +85,12 @@ public class GamemodeOptionsFragment extends Fragment implements AdapterView.OnI
 
                 /*if (zeit.length()== 0 || maxScore.length() == 0)
                     return;*/
-                    zeit = time.getText().toString();
+                    //zeit = time.getText().toString();
                     maxScore = maxscore.getText().toString();
 
 
 
-                    x = Integer.parseInt(zeit);
+                    //x = Integer.parseInt(zeit);
                     y = Integer.parseInt(maxScore);
                     listener.onInputASent(x, y, z);
 
@@ -100,7 +100,7 @@ public class GamemodeOptionsFragment extends Fragment implements AdapterView.OnI
                     //startActivity(intent);
 
                     Intent intent1 = new Intent(getActivity().getBaseContext(), Connection.class);
-                    intent1.putExtra("Zeit",x);
+                    //intent1.putExtra("Zeit",x);
                     intent1.putExtra("MaxScore", y);
                     intent1.putExtra("Difficulty", z);
                     intent1.putExtra("Gamemode", gamemode);
@@ -112,11 +112,6 @@ public class GamemodeOptionsFragment extends Fragment implements AdapterView.OnI
 
                 }
             });
-
-
-
-
-
 
 
 

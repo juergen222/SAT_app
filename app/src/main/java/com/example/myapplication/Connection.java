@@ -50,7 +50,7 @@ public class Connection extends AppCompatActivity implements GamemodeOptionsFrag
         gameoptionsb.setOnClickListener(v -> openOptions());
         onInputASent(x, y ,zx);
         Intent intent = getIntent();
-        maxtime = intent.getIntExtra("Zeit", timeReceive);
+       // maxtime = intent.getIntExtra("Zeit", timeReceive);
         maxscore = intent.getIntExtra("MaxScore", ScoreReceived);
         difficulty = intent.getIntExtra("Difficulty", difficultyReceived);
         mode = intent.getIntExtra("Gamemode", modeReceived);
@@ -65,7 +65,7 @@ public class Connection extends AppCompatActivity implements GamemodeOptionsFrag
                 public void onClick(View v) {
 
                     Intent intent1 = new Intent(getBaseContext(), GameStartActivity.class);
-                    intent1.putExtra("Zeit", maxtime);
+                   // intent1.putExtra("Zeit", maxtime);
                     intent1.putExtra("MaxScore", maxscore);
                     intent1.putExtra("Difficulty", difficulty);
                     intent1.putExtra("Gamemode", mode);
