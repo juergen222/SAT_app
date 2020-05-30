@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -105,6 +106,13 @@ public class GameStartActivity extends AppCompatActivity {
     {
         if(!inProgress)
             return;
+
+        shotMissed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 activeColor =0;
+            }
+        });
         if(colorRing == activeColor) {
             currentPlayer.addScore(800);
             hit_notificationID = 1;
@@ -114,6 +122,7 @@ public class GameStartActivity extends AppCompatActivity {
         else if(colorRing != activeColor ) {
 
             hit_notificationID = 3;
+
         }
         appearNotification(hit_notificationID, hitNotification);
 
@@ -225,6 +234,8 @@ public class GameStartActivity extends AppCompatActivity {
     TextView roundText;
     ImageView hitNotification;
     ImageView color;
+    ImageButton shotMissed;
+
 
     Handler handler = new Handler(Looper.getMainLooper());
     FragmentManager fm = getSupportFragmentManager();
@@ -245,6 +256,7 @@ public class GameStartActivity extends AppCompatActivity {
         scoreText = findViewById(R.id.score);
         playerText = findViewById(R.id.player);
         roundText = findViewById(R.id.round);
+        shotMissed = findViewById(R.id.shot_missed);
 
 
         String clientId = MqttClient.generateClientId();

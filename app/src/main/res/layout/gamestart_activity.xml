@@ -37,6 +37,14 @@
         android:inputType="number"
 
         android:textSize="23dp" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="260dp"
+        android:layout_marginLeft="260dp"
+        android:id="@+id/shot_missed"
+        android:background="@drawable/shot_missed"
+        />
 
 
     <ImageView
@@ -44,7 +52,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="150dp"
-        android:layout_marginTop="210dp" />
+        android:layout_marginTop="210dp"
+        />
 
 
     <ImageView
