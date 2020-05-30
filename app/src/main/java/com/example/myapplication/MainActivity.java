@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity{
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setupViewPager(mViewpager);
-                setViewPager(0);
+                /*etupViewPager(mViewpager);
+                setViewPager(0);*/
+
+                openConnectionLostMessage();
             }
 
 
@@ -115,6 +117,12 @@ public class MainActivity extends AppCompatActivity{
     public void openStart(){
         Intent intent = new Intent(this, Connection.class);
         startActivity(intent);
+
+    }
+    public void openConnectionLostMessage()
+    {
+        ConnectionLostDialogue dialogue = new ConnectionLostDialogue();
+        dialogue.show(getSupportFragmentManager(),"coonection lost dialogue");
 
     }
 

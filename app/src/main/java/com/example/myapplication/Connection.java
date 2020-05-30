@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,7 +58,7 @@ public class Connection extends AppCompatActivity implements GamemodeOptionsFrag
         configurated = intent.getBooleanExtra("configurated", configuratedReceived);
         //Toast.makeText(Connection.this, "Zeit" + maxscore, Toast.LENGTH_SHORT).show();
 
-        //if(configurated) {
+        if(configurated) {
 
             gamestart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,7 +66,7 @@ public class Connection extends AppCompatActivity implements GamemodeOptionsFrag
                 public void onClick(View v) {
 
                     Intent intent1 = new Intent(getBaseContext(), GameStartActivity.class);
-                   // intent1.putExtra("Zeit", maxtime);
+                    // intent1.putExtra("Zeit", maxtime);
                     intent1.putExtra("MaxScore", maxscore);
                     intent1.putExtra("Difficulty", difficulty);
                     intent1.putExtra("Gamemode", mode);
@@ -75,9 +76,10 @@ public class Connection extends AppCompatActivity implements GamemodeOptionsFrag
 
                 }
             });
-        //}
-       // else
-        //{Toast.makeText(Connection.this, "You need to configurate", Toast.LENGTH_SHORT).show();}
+        }
+        else
+        {
+            Toast.makeText(Connection.this, "You need to configurate", Toast.LENGTH_SHORT).show();}
 
 
 

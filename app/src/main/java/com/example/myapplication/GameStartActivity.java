@@ -269,9 +269,9 @@ public class GameStartActivity extends AppCompatActivity {
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     // Something went wrong e.g. connection timeout or firewall problems
                     // TODO Dialog Box and back to Main Menu
-
-                     //fm.beginTransaction().add(R.id.connection_lost, fragment).commit();
                     openConnectionLostMessage();
+                     //fm.beginTransaction().add(R.id.connection_lost, fragment).commit();
+
                 }
             });
             client.setCallback(new MqttCallback() {
@@ -297,8 +297,8 @@ public class GameStartActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "ERROR Connecting", Toast.LENGTH_SHORT).show();
             //TODO Dialog Box and back to Main Menu
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            openConnectionLostMessage();
+
         }
 
 

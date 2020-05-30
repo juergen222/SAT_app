@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content">
-
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:background="@drawable/red_exclamation"
-        android:scaleX="0.5"
-        android:scaleY="0.2"
-        android:layout_marginStart="200dp" />
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+
+        android:background="@drawable/exclamation_mark"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+
+         />
+
 
 </RelativeLayout>
