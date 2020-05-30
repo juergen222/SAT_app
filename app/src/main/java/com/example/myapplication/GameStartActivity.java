@@ -280,7 +280,7 @@ public class GameStartActivity extends AppCompatActivity {
                     Toast.makeText(GameStartActivity.this, "ERROR Connecting", Toast.LENGTH_SHORT).show();
 
                     // TODO Dialog Box and back to Main Menu
-                    openConnectionLostMessage();
+                    openConnectionLostMessage2();
                 }
 
                 @Override
@@ -442,5 +442,13 @@ public class GameStartActivity extends AppCompatActivity {
         dialogue.show(getSupportFragmentManager(),"coonection lost dialogue");
 
     }
+
+    public void openConnectionLostMessage2()
+    {
+        ConnectionLostDialogue2 dialogue = new ConnectionLostDialogue2();
+        dialogue.show(getSupportFragmentManager(),"coonection lost dialogue 2 ");
+
+    }
+
 
 }
