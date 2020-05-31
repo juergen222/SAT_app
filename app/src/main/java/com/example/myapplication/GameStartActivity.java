@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -64,7 +66,7 @@ public class GameStartActivity extends AppCompatActivity {
     int score = 0;
 
 
-    int hit_notificationID;
+    //int hit_notificationID;
 
 
     int ScoreReceived = 5000;
@@ -89,7 +91,8 @@ public class GameStartActivity extends AppCompatActivity {
     int winner = 0;
     int looser;
     boolean inProgress = true;
-    int round;
+    int round = 1;
+    boolean gameStarted = false;
 
     int mode = 0;
     int random;
@@ -100,31 +103,31 @@ public class GameStartActivity extends AppCompatActivity {
     int addpoints;          //points added to player score
 
 
-
-
     public void userActed(int colorRing)
     {
         if(!inProgress)
             return;
+        hitNotification.setVisibility(View.VISIBLE);
 
         shotMissed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 activeColor =0;
+                 activeColor = 0;
             }
         });
-        if(colorRing == activeColor) {
+
+        if(colors.get(colorRing).equals(colors.get(activeColor))) {
             currentPlayer.addScore(800);
-            hit_notificationID = 1;
-
+            //hit_notificationID = 1;
+            //Toast.makeText(GameStartActivity.this, "Color hit!", Toast.LENGTH_SHORT).show();
+            hitNotification.setImageResource(R.drawable.hit_message);
         }
-
-        else if(colorRing != activeColor ) {
-
-            hit_notificationID = 3;
-
+        else{
+            //Toast.makeText(GameStartActivity.this, "Color missed!", Toast.LENGTH_SHORT).show();
+            hitNotification.setImageResource(R.drawable.missed_note);
+            //hit_notificationID = 3;
         }
-        appearNotification(hit_notificationID, hitNotification);
+        //appearNotification(hit_notificationID, hitNotification);
 
         //TODO Logik für Punkte
         if(currentPlayer.score >= maxscore)
@@ -133,10 +136,11 @@ public class GameStartActivity extends AppCompatActivity {
             looser = secondaryPlayer.number;
 
             inProgress = false;
+            updateText();
             Toast.makeText(this, "Winner"+ winner, Toast.LENGTH_SHORT).show();
             //TODO Result Activity
             //fm.beginTransaction().add(R.id.win_lost, winner_declare).commit();
-            Intent intent  = new Intent(getBaseContext() , ScoreboardActivity.class );
+            Intent intent  = new Intent(GameStartActivity.this , ScoreboardActivity.class );
             intent.putExtra("Winner", winner);
             intent.putExtra("score", currentPlayer.score);
             intent.putExtra("scoreTwo", secondaryPlayer.score);
@@ -144,6 +148,8 @@ public class GameStartActivity extends AppCompatActivity {
             startActivity(intent);
             return;
         }
+
+        updateText();
 
         if(currentPlayer.number == 1) {
             currentPlayer = player2;
@@ -155,79 +161,7 @@ public class GameStartActivity extends AppCompatActivity {
             secondaryPlayer = player2;
             round++;
         }
-
-        activeColor = randomColor();
-        updateText();
-        start_command(1);
     }
-
-   /* Runnable gameLoop = new Runnable() {
-        @Override
-        public void run() {
-
-
-            //if (player1.score < maxscore && player2.score < maxscore) {
-            // while (player1.score < maxscore || player2.score < maxscore) {
-
-            // while (!new_score) {
-            //}
-            //new_score = false;
-            //start_command();
-            if (player1.score > maxscore || player2.score > maxscore) {
-
-                vergleichswert = randomColor();
-
-
-
-                // random number responsible for the colour generated
-
-                if (score == vergleichswert) { //pointsystem
-
-                    addpoints = 800;
-                    hit_notificationID = 1;
-
-
-                } else if (score == (vergleichswert + -1)) {
-                    addpoints = 400;
-                    hit_notificationID = 2;
-                } else {
-                    addpoints = 0;
-                    hit_notificationID = 3;
-
-
-                }
-                Log.d("blab", "" + addpoints);
-
-
-                appearNotification(hit_notificationID, hitNotification);
-
-
-                if (player1Active) // turnsystem
-                {
-
-                    playerchanges(player1, addpoints);
-                    player1Active = false;
-                    player2Active = true;
-
-
-                    updateText(scoreText, timeText, playerText, player1);
-
-
-                } else if (player2Active) {
-                    playerchanges(player2, addpoints);
-                    player1Active = true;
-                    player2Active = false;
-
-
-                    updateText(scoreText, timeText, playerText, player2);
-
-
-                }
-            }
-            handler.postDelayed(this, 300);
-        }
-    };*/
-
 
     TextView scoreText;
     TextView playerText;
@@ -235,6 +169,7 @@ public class GameStartActivity extends AppCompatActivity {
     ImageView hitNotification;
     ImageView color;
     ImageButton shotMissed;
+    Button start_button;
 
 
     Handler handler = new Handler(Looper.getMainLooper());
@@ -245,6 +180,7 @@ public class GameStartActivity extends AppCompatActivity {
     ConnectionLostFragment fragment = new ConnectionLostFragment();
     WinnerMessageFragment winner_declare = new WinnerMessageFragment();
 
+    ArrayList<String> colors = new ArrayList<String>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -257,6 +193,18 @@ public class GameStartActivity extends AppCompatActivity {
         playerText = findViewById(R.id.player);
         roundText = findViewById(R.id.round);
         shotMissed = findViewById(R.id.shot_missed);
+        start_button = findViewById(R.id.start_button);
+        hitNotification = findViewById(R.id.note);
+
+        colors.add("failed");
+        colors.add("black");
+        colors.add("blue");
+        colors.add("blue");
+        colors.add("red");
+        colors.add("red");
+        colors.add("yellow");
+        colors.add("yellow");
+        colors.add("yellow");
 
 
         String clientId = MqttClient.generateClientId();
@@ -269,7 +217,7 @@ public class GameStartActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     // We are connected
-                    Toast.makeText(GameStartActivity.this, "ready to start game", Toast.LENGTH_LONG);
+                    //Toast.makeText(GameStartActivity.this, "connected", Toast.LENGTH_SHORT).show();
                     try{
                         client.subscribe("masterPhone", 0);
                     }catch(MqttException e){
@@ -304,6 +252,7 @@ public class GameStartActivity extends AppCompatActivity {
                 public void deliveryComplete(IMqttDeliveryToken token) {
                 }
             });
+            Toast.makeText(GameStartActivity.this, "Ready to start game", Toast.LENGTH_LONG).show();
 
         } catch (MqttException e) {
             e.printStackTrace();
@@ -336,7 +285,7 @@ public class GameStartActivity extends AppCompatActivity {
 
         // public void run() {
 
-        startGame();
+        //startGame();
 
         //}
 
@@ -345,7 +294,7 @@ public class GameStartActivity extends AppCompatActivity {
     }
 
     private void start_command(int mode) {
-        String topic = "masterPhone";
+        String topic = "start_command";
         String message = "start1";
 
         if(mode == 1)
@@ -364,12 +313,23 @@ public class GameStartActivity extends AppCompatActivity {
         }
     }
 
-    public void startGame() {
-        activeColor = randomColor();
-        currentPlayer = player1;
-        secondaryPlayer = player2;
-        updateText();
-        start_command(1);
+    @SuppressLint("SetTextI18n")
+    public void startGame(View v) {
+        if (!gameStarted){
+            gameStarted = true;
+            activeColor = randomColor();
+            currentPlayer = player1;
+            secondaryPlayer = player2;
+            updateText();
+            start_button.setText("Next Round");
+            start_command(1);
+        }
+        else {
+            activeColor = randomColor();
+            hitNotification.setVisibility(View.INVISIBLE);
+            updateText();
+            start_command(1);
+        }
     }
 
     public class Player {  //player class
@@ -408,7 +368,7 @@ public class GameStartActivity extends AppCompatActivity {
         return random;
     }
 
-    public void appearNotification(int note, ImageView x) {
+    /*public void appearNotification(int note, ImageView x) {
 
 
         boolean yes = true;
@@ -429,7 +389,7 @@ public class GameStartActivity extends AppCompatActivity {
 
         x.setVisibility(View.INVISIBLE);
 
-    }
+    }*/
 
     @SuppressLint("SetTextI18n")
     public void updateText() {
